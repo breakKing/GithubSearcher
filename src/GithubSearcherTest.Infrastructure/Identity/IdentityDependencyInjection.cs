@@ -1,10 +1,8 @@
-using System;
 using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Infrastructure.Identity.Entities;
 using GithubSearcherTest.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using OpenIddict.Abstractions;
 
 namespace GithubSearcherTest.Infrastructure.Identity;
 
@@ -28,53 +26,7 @@ public static class IdentityDependencyInjection
             options.Password.RequireUppercase = true;
         }).AddEntityFrameworkStores<AppDbContext>();
 
-        services.Configure<IdentityOptions>(options =>
-        {
-            options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
-            options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
-            options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
-        });
-
         services.AddTransient<IIdentityService, IdentityService>();
-
-        services.AddOpenIddict()
-            .AddCore(options =>
-            {
-                options.UseEntityFrameworkCore()
-                    .UseDbContext<AppDbContext>()
-                    .ReplaceDefaultEntities<long>();
-            })
-            .AddServer(options =>
-            {
-                options.AllowPasswordFlow();
-
-                options.UseReferenceAccessTokens();
-
-                options.SetAccessTokenLifetime(TimeSpan.FromMinutes(15));
-
-                options.SetTokenEndpointUris("/api/login");
-
-                options.AddEphemeralSigningKey()
-                    .AddEphemeralEncryptionKey();
-
-                options.RegisterScopes(OpenIddictConstants.Scopes.OpenId,
-                    CustomIdentityConstants.GithubSearcherApiScope);
-
-                options.UseAspNetCore()
-                    .EnableTokenEndpointPassthrough();
-            })
-            .AddValidation(options =>
-            {
-                options.UseLocalServer();
-                options.EnableTokenEntryValidation();
-                options.UseAspNetCore();
-            });
-
-        services.AddAuthentication(options =>
-        {
-            options.DefaultScheme = OpenIddictConstants.Schemes.Bearer;
-            options.DefaultChallengeScheme = OpenIddictConstants.Schemes.Bearer;
-        });
 
         return services;
     }

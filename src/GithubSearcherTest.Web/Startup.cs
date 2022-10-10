@@ -1,9 +1,5 @@
-using FastEndpoints;
 using GithubSearcherTest.Application;
 using GithubSearcherTest.Infrastructure;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
 namespace GithubSearcherTest.Web;
 

@@ -15,12 +15,11 @@ public static class PersistenceDependencyInjection
     public static IServiceCollection AddPersistenceServices(
         this IServiceCollection services,
         IConfiguration configuration,
-        IWebHostEnvironment environment)
+        IHostEnvironment environment)
     {
         services.AddDbContext<AppDbContext>(o =>
         {
             o.UseNpgsql(configuration.GetConnectionString("Database"));
-            o.UseOpenIddict<long>();
         });
 
         services.AddScoped<IAppDbContext, AppDbContext>();
@@ -30,12 +29,13 @@ public static class PersistenceDependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddDataSeeds(this IServiceCollection services, IWebHostEnvironment environment)
+    private static IServiceCollection AddDataSeeds(
+        this IServiceCollection services,
+        IHostEnvironment environment)
     {
         if (environment.IsDevelopment())
         {
             services.AddScoped<IDataSeed, DefaultUsersSeed>();
-            services.AddScoped<IDataSeed, AppClientSeed>();
 
             services.AddHostedService<DatabaseSeeder>();
         }

@@ -14,11 +14,15 @@ public class GithubClient : IGithubClient
         _factory = factory;
     }
 
-    public async Task<string> SearchForReposAsync(string queryText, CancellationToken ct = default)
+    public async Task<string> SearchForReposAsync(
+        string queryText,
+        int pageNumber = 1,
+        int pageSize = 100,
+        CancellationToken ct = default)
     {
         var client = _factory.CreateClient("Github");
 
-        var response = await client.GetAsync($"/search/repositories?q={queryText}", ct);
+        var response = await client.GetAsync($"/search/repositories?q={queryText}&per_page={pageSize}&page={pageNumber}", ct);
 
         return await response.Content.ReadAsStringAsync(ct);
     }

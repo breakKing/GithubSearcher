@@ -26,7 +26,7 @@ public class FindEndpoint : Endpoint<FindRequest, FindResponse>
 
     public override async Task HandleAsync(FindRequest req, CancellationToken ct)
     {
-        var query = new FindQuery(req.QueryText);
+        var query = new FindQuery(req.QueryText, req.PageSize, req.PageNumber);
         var result = await _mediator.Send(query, ct);
 
         var data = JsonConvert.DeserializeObject<SearchResultDto>(result.JsonResult);

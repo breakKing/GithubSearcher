@@ -16,11 +16,13 @@ namespace GithubSearcherTest.Application.Search.Handlers
             _client = client;
         }
 
-        public async Task<FindQueryResponse> Handle(FindQuery request, CancellationToken ct)
+        public async Task<FindQueryResponse> Handle(FindQuery query, CancellationToken ct)
         {
-            var queryText = request.QueryText;
-
-            var result = await _client.SearchForReposAsync(queryText, ct);
+            var result = await _client.SearchForReposAsync(
+                query.QueryText,
+                query.PageNumber,
+                query.PageSize,
+                ct);
 
             return new FindQueryResponse(result);
         }

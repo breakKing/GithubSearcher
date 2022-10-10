@@ -9,17 +9,19 @@ namespace GithubSearcherTest.Web;
 
 public static class Startup
 {
-    // This method gets called by the runtime. Use this method to add services to the container.
     public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddApplicationServices();
-        builder.Services.AddInfrastructureServices(builder.Configuration);
+        
+        builder.Services.AddInfrastructureServices(
+            builder.Configuration,
+            builder.Environment);
+            
         builder.Services.AddWebServices();
 
         return builder;
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public static WebApplication Configure(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
@@ -29,7 +31,6 @@ public static class Startup
         else
         {
             app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
@@ -38,6 +39,7 @@ public static class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseFastEndpoints();

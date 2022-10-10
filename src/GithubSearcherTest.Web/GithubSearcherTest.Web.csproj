@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GithubSearcherTest.Application\GithubSearcherTest.Application.csproj" />
+    <ProjectReference Include="..\GithubSearcherTest.Infrastructure\GithubSearcherTest.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9" />
+  </ItemGroup>
+
+</Project>

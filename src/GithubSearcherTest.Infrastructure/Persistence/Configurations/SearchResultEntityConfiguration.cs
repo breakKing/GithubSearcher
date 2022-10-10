@@ -8,7 +8,10 @@ namespace GithubSearcherTest.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<SearchResult> builder)
         {
-            builder.HasKey(s => s.Query);
+            builder.HasKey(s => s.Id);
+
+            builder.Property(s => s.Id)
+                .UseIdentityByDefaultColumn();
 
             builder.Property(s => s.Query)
                 .HasMaxLength(300)
@@ -17,6 +20,8 @@ namespace GithubSearcherTest.Infrastructure.Persistence.Configurations
             builder.Property(s => s.Result)
                 .HasColumnType("jsonb")
                 .IsRequired();
+
+            builder.HasIndex(s => s.Query);
         }
     }
 }

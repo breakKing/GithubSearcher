@@ -43,7 +43,10 @@ public class HistoryQueryHandler : IRequestHandler<HistoryQuery, HistoryQueryRes
             TotalCount = totalCount,
             Results = results.ConvertAll(r => 
             {
-                return JsonConvert.DeserializeObject<SearchResultDto>(r.Result);
+                var data = JsonConvert.DeserializeObject<SearchResultDto>(r.Result);
+                data.id = r.Id;
+
+                return data;
             })
         };
     }

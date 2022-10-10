@@ -35,6 +35,7 @@ namespace GithubSearcherTest.Application.Search.Handlers
             if (dbCache is not null)
             {
                 var cachedData = JsonConvert.DeserializeObject<SearchResultDto>(dbCache.Result);
+                cachedData.id = dbCache.Id;
                 return new FindQueryResponse
                 {
                     Result = cachedData
@@ -50,15 +51,18 @@ namespace GithubSearcherTest.Application.Search.Handlers
             var data = JsonConvert.DeserializeObject<SearchResultDto>(result);
             var optimizedJson = JsonConvert.SerializeObject(data);
 
-            _dbContext.SearchResults.Add(new SearchResult
+            var searchResult = new SearchResult
             {
                 Query = query.QueryText,
                 Result = optimizedJson,
                 PageNumber = query.PageNumber,
                 PageSize = query.PageSize
-            });
+            };
+            _dbContext.SearchResults.Add(searchResult);
 
             await _dbContext.SaveChangesAsync(ct);
+
+            data.id = searchResult.Id;
 
             return new FindQueryResponse
             {

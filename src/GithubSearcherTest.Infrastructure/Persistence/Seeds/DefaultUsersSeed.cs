@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Infrastructure.Identity.Constants;
 using GithubSearcherTest.Infrastructure.Identity.Entities;
 using GithubSearcherTest.Infrastructure.Persistence.Seeds.Base;

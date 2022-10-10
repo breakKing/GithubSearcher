@@ -8,4 +8,9 @@ public class Role : IdentityRole<long>
     {
         
     }
+
+    public Role()
+    {
+        
+    }
 }

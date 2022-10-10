@@ -1,4 +1,5 @@
 using System;
+using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Infrastructure.Identity.Entities;
 using GithubSearcherTest.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +34,8 @@ public static class IdentityDependencyInjection
             options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
             options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
         });
+
+        services.AddTransient<IIdentityService, IdentityService>();
 
         services.AddOpenIddict()
             .AddCore(options =>

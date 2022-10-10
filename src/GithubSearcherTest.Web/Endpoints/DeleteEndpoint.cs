@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using FastEndpoints;
 using GithubSearcherTest.Application.Search.Commands;
 using GithubSearcherTest.Web.Contracts;
 using MediatR;

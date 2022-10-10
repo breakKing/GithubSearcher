@@ -1,4 +1,3 @@
-using FastEndpoints;
 using FluentValidation;
 using GithubSearcherTest.Web.Contracts;
 

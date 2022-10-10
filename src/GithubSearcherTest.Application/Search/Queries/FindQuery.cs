@@ -3,11 +3,11 @@ using MediatR;
 
 namespace GithubSearcherTest.Application.Search.Queries
 {
-    public class RemoteSearchQuery: IRequest<RemoteSearchQueryResponse>
+    public class FindQuery: IRequest<FindQueryResponse>
     {
         public string QueryText { get; set; }
 
-        public RemoteSearchQuery(string queryText)
+        public FindQuery(string queryText)
         {
             QueryText = queryText;
         }

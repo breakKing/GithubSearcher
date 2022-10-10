@@ -17,6 +17,9 @@ public class GithubClient : IGithubClient
     public async Task<string> SearchForReposAsync(string queryText, CancellationToken ct = default)
     {
         var client = _factory.CreateClient("Github");
-        return string.Empty;
+
+        var response = await client.GetAsync($"/search/repositories?q={queryText}", ct);
+
+        return await response.Content.ReadAsStringAsync(ct);
     }
 }

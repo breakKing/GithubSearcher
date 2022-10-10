@@ -1,3 +1,4 @@
+using FastEndpoints;
 using GithubSearcherTest.Application;
 using GithubSearcherTest.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,8 @@ public static class Startup
         app.UseRouting();
 
         app.UseAuthorization();
+
+        app.UseFastEndpoints();
 
         app.UseEndpoints(endpoints =>
         {

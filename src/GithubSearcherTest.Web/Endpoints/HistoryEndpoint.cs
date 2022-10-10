@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Application.Search.Queries;
 using GithubSearcherTest.Web.Contracts;
 using MediatR;
@@ -18,7 +16,7 @@ public class HistoryEndpoint : Endpoint<HistoryRequest, HistoryResponse>
     public override void Configure()
     {
         Get("api/find");
-        AllowAnonymous();
+        Roles("Common");
     }
 
     public override async Task HandleAsync(HistoryRequest req, CancellationToken ct)

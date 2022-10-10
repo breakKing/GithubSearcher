@@ -1,5 +1,4 @@
-using FastEndpoints;
-using Microsoft.Extensions.DependencyInjection;
+using FastEndpoints.Security;
 
 namespace GithubSearcherTest.Web;
 
@@ -9,6 +8,11 @@ public static class DependencyInjection
     {
         services.AddRazorPages();
         services.AddFastEndpoints();
+        services.AddAuthenticationJWTBearer(
+            "SuperSecretTokenSigningKey",
+            "GithubSearcherIssuer",
+            "GithubSearcherAudience"
+        );
         
         return services;
     }

@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Application.Search.Commands;
 using GithubSearcherTest.Web.Contracts;
 using MediatR;
@@ -18,7 +16,7 @@ public class DeleteEndpoint : Endpoint<DeleteRequest, DeleteResponse>
     public override void Configure()
     {
         Delete("api/find/{Id}");
-        AllowAnonymous();
+        Roles("Common");
     }
 
     public override async Task HandleAsync(DeleteRequest req, CancellationToken ct)

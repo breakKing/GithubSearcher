@@ -11,22 +11,43 @@ namespace GithubSearcherTest.Infrastructure.Identity;
 public class IdentityService : IIdentityService
 {
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<Role> _roleManager;
+    private readonly SignInManager<User> _signInManager;
 
     public IdentityService(
         UserManager<User> userManager,
-        RoleManager<Role> roleManager)
+        SignInManager<User> signInManager)
     {
         _userManager = userManager;
-        _roleManager = roleManager;
+        _signInManager = signInManager;
     }
 
-    public Task<ErrorOr<string>> GetAccessTokenAsync(
+    public async Task<UserDto> AuthAsync(
         string username,
         string password,
         CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var user = await _userManager.FindByNameAsync(username);
+        if (user is null)
+        {
+            return null;
+        }
+
+        var signInResult = await _signInManager.CheckPasswordSignInAsync(
+            user,
+            password,
+            false);
+
+        if (!signInResult.Succeeded)
+        {
+            return null;
+        }
+
+        return new UserDto
+        {
+            Id = user.Id,
+            Username = user.UserName,
+            Roles = (List<string>)await _userManager.GetRolesAsync(user)
+        };
     }
 
     public async Task<ErrorOr<UserDto>> SignUpAsync(

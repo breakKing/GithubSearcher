@@ -11,7 +11,7 @@ public interface IIdentityService
         CancellationToken ct = default
     );
 
-    Task<ErrorOr<string>> GetAccessTokenAsync(
+    Task<UserDto> AuthAsync(
         string username,
         string password,
         CancellationToken ct = default

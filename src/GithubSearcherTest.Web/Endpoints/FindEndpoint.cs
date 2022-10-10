@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Application.Search.Queries;
 using GithubSearcherTest.Web.Contracts;
 using MediatR;
@@ -18,7 +16,7 @@ public class FindEndpoint : Endpoint<FindRequest, FindResponse>
     public override void Configure()
     {
         Post("api/find");
-        AllowAnonymous();
+        Roles("Common");
     }
 
     public override async Task HandleAsync(FindRequest req, CancellationToken ct)

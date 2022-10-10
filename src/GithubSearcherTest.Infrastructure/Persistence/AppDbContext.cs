@@ -1,11 +1,13 @@
 ﻿using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Domain.Entities;
+using GithubSearcherTest.Infrastructure.Identity.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace GithubSearcherTest.Infrastructure.Persistence
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class AppDbContext : IdentityDbContext<User, Role, long>, IAppDbContext
     {
         public DbSet<SearchResult> SearchResults => Set<SearchResult>();
 

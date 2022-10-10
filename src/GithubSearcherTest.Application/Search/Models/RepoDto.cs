@@ -1,4 +1,4 @@
-namespace GithubSearcherTest.Web.Models;
+namespace GithubSearcherTest.Application.Search.Models;
 
 public class RepoDto
 {

@@ -1,4 +1,4 @@
-using GithubSearcherTest.Web.Models;
+using GithubSearcherTest.Application.Search.Models;
 
 namespace GithubSearcherTest.Web.Contracts;
 

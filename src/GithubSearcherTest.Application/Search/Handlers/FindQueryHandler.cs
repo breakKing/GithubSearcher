@@ -1,30 +1,69 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using GithubSearcherTest.Application.Common.Abstractions;
+using GithubSearcherTest.Application.Search.Models;
 using GithubSearcherTest.Application.Search.Queries;
 using GithubSearcherTest.Application.Search.Responses;
+using GithubSearcherTest.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace GithubSearcherTest.Application.Search.Handlers
 {
     public class FindQueryHandler : IRequestHandler<FindQuery, FindQueryResponse>
     {
         private readonly IGithubClient _client;
+        private readonly IAppDbContext _dbContext;
 
-        public FindQueryHandler(IGithubClient client)
+        public FindQueryHandler(
+            IGithubClient client,
+            IAppDbContext dbContext)
         {
             _client = client;
+            _dbContext = dbContext;
         }
 
-        public async Task<FindQueryResponse> Handle(FindQuery query, CancellationToken ct)
+        public async Task<FindQueryResponse> Handle(
+            FindQuery query,
+            CancellationToken ct)
         {
+            var dbCache = await _dbContext.SearchResults.FirstOrDefaultAsync(sr => sr.Query == query.QueryText
+                && sr.PageNumber == query.PageNumber
+                && sr.PageSize == query.PageSize, ct);
+
+            if (dbCache is not null)
+            {
+                var cachedData = JsonConvert.DeserializeObject<SearchResultDto>(dbCache.Result);
+                return new FindQueryResponse
+                {
+                    Result = cachedData
+                };
+            }
+
             var result = await _client.SearchForReposAsync(
                 query.QueryText,
                 query.PageNumber,
                 query.PageSize,
                 ct);
 
-            return new FindQueryResponse(result);
+            var data = JsonConvert.DeserializeObject<SearchResultDto>(result);
+            var optimizedJson = JsonConvert.SerializeObject(data);
+
+            _dbContext.SearchResults.Add(new SearchResult
+            {
+                Query = query.QueryText,
+                Result = optimizedJson,
+                PageNumber = query.PageNumber,
+                PageSize = query.PageSize
+            });
+
+            await _dbContext.SaveChangesAsync(ct);
+
+            return new FindQueryResponse
+            {
+                Result = data
+            };
         }
     }
 }

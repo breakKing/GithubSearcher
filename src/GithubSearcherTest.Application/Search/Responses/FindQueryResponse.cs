@@ -1,12 +1,9 @@
-﻿namespace GithubSearcherTest.Application.Search.Responses
-{
-    public class FindQueryResponse
-    {
-        public string JsonResult { get; set; }
+﻿using System.Collections.Generic;
+using GithubSearcherTest.Application.Search.Models;
 
-        public FindQueryResponse(string jsonResult)
-        {
-            JsonResult = jsonResult;
-        }
-    }
+namespace GithubSearcherTest.Application.Search.Responses;
+
+public class FindQueryResponse
+{
+    public SearchResultDto Result { get; set; } = new();
 }

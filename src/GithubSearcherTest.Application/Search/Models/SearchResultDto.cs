@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GithubSearcherTest.Web.Models;
+namespace GithubSearcherTest.Application.Search.Models;
 
 public class SearchResultDto
 {

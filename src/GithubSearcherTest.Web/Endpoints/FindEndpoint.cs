@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using FastEndpoints;
 using GithubSearcherTest.Application.Search.Queries;
 using GithubSearcherTest.Web.Contracts;
-using GithubSearcherTest.Web.Models;
 using MediatR;
-using Newtonsoft.Json;
 
 namespace GithubSearcherTest.Web.Endpoints;
 
@@ -27,13 +25,11 @@ public class FindEndpoint : Endpoint<FindRequest, FindResponse>
     public override async Task HandleAsync(FindRequest req, CancellationToken ct)
     {
         var query = new FindQuery(req.QueryText, req.PageSize, req.PageNumber);
-        var result = await _mediator.Send(query, ct);
-
-        var data = JsonConvert.DeserializeObject<SearchResultDto>(result.JsonResult);
+        var queryResponse = await _mediator.Send(query, ct);
 
         var response = new FindResponse()
         {
-            Result = data
+            Result = queryResponse.Result
         };
         await SendAsync(response, cancellation: ct);
     }

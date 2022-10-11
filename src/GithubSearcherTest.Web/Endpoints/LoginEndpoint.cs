@@ -1,6 +1,6 @@
-using FastEndpoints.Security;
 using GithubSearcherTest.Application.Identity.Commands;
 using GithubSearcherTest.Web.Contracts;
+using GithubSearcherTest.Web.Services;
 using MediatR;
 
 namespace GithubSearcherTest.Web.Endpoints;
@@ -8,10 +8,12 @@ namespace GithubSearcherTest.Web.Endpoints;
 public class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
     private readonly IMediator _mediator;
+    private readonly IJWTService _jwtService;
 
-    public LoginEndpoint(IMediator mediator)
+    public LoginEndpoint(IMediator mediator, IJWTService jwtService)
     {
         _mediator = mediator;
+        _jwtService = jwtService;
     }
 
     public override void Configure()
@@ -29,13 +31,7 @@ public class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
         {
             var user = commandResponse.User!;
 
-            var jwtToken = JWTBearer.CreateToken(
-                signingKey: "SuperSecretTokenSigningKey",
-                issuer: "GithubSearcherIssuer",
-                audience: "GithubSearcherAudience",
-                expireAt: DateTime.UtcNow.AddDays(1),
-                claims: new[] { ("Username", user.Username), ("Id", user.Id.ToString()) },
-                roles: user.Roles.ToArray());
+            var jwtToken = _jwtService.CreateToken(user);
 
             await SendAsync(new LoginResponse
             {

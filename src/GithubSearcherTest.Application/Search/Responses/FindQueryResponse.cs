@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using GithubSearcherTest.Application.Search.Models;
+﻿using GithubSearcherTest.Application.Search.Models;
 
 namespace GithubSearcherTest.Application.Search.Responses;
 

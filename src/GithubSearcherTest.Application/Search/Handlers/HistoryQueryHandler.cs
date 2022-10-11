@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Application.Search.Models;
 using GithubSearcherTest.Application.Search.Queries;

@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Application.Search.Commands;
 using GithubSearcherTest.Application.Search.Responses;

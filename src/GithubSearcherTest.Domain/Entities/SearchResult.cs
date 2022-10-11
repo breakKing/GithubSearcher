@@ -1,11 +1,10 @@
-﻿namespace GithubSearcherTest.Domain.Entities
+﻿namespace GithubSearcherTest.Domain.Entities;
+
+public class SearchResult
 {
-    public class SearchResult
-    {
-        public long Id { get; set; }
-        public string Query { get; set; }
-        public string Result { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-    }
+    public long Id { get; set; }
+    public string Query { get; set; } = string.Empty;
+    public string Result { get; set; } = string.Empty;
+    public int PageNumber { get; set; }
+    public int PageSize { get; set; }
 }

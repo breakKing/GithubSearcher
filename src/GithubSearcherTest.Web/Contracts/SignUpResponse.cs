@@ -5,6 +5,6 @@ namespace GithubSearcherTest.Web.Contracts;
 public class SignUpResponse
 {
     public bool Succeeded { get; set; }
-    public List<string> Errors { get; set; }
-    public UserDto User { get; set; }
+    public List<string> Errors { get; set; } = new();
+    public UserDto? User { get; set; }
 }

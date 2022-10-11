@@ -4,5 +4,5 @@ namespace GithubSearcherTest.Web.Contracts;
 
 public class FindResponse
 {
-    public SearchResultDto Result { get; set; }
+    public SearchResultDto Result { get; set; } = new();
 }

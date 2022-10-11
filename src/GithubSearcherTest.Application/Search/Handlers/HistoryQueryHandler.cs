@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Application.Search.Models;
 using GithubSearcherTest.Application.Search.Queries;
@@ -44,7 +40,7 @@ public class HistoryQueryHandler : IRequestHandler<HistoryQuery, HistoryQueryRes
             Results = results.ConvertAll(r => 
             {
                 var data = JsonConvert.DeserializeObject<SearchResultDto>(r.Result);
-                data.id = r.Id;
+                data!.id = r.Id;
 
                 return data;
             })

@@ -1,7 +1,6 @@
 using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Infrastructure.Identity.Entities;
 using GithubSearcherTest.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GithubSearcherTest.Infrastructure.Identity;

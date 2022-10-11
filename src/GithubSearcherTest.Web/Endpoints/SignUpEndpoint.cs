@@ -21,7 +21,7 @@ public class SignUpEndpoint : Endpoint<SignUpRequest, SignUpResponse>
 
     public override async Task HandleAsync(SignUpRequest req, CancellationToken ct)
     {
-        var command = new SignUpCommand(req.Username, req.Password);
+        var command = new SignUpCommand(req.Username!, req.Password!);
         var commandResponse = await _mediator.Send(command, ct);
 
         var response = new SignUpResponse()

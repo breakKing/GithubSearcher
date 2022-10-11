@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using GithubSearcherTest.Application.Common.Abstractions;
+﻿using GithubSearcherTest.Application.Common.Abstractions;
 using GithubSearcherTest.Application.Search.Models;
 using GithubSearcherTest.Application.Search.Queries;
 using GithubSearcherTest.Application.Search.Responses;
@@ -35,7 +33,7 @@ namespace GithubSearcherTest.Application.Search.Handlers
             if (dbCache is not null)
             {
                 var cachedData = JsonConvert.DeserializeObject<SearchResultDto>(dbCache.Result);
-                cachedData.id = dbCache.Id;
+                cachedData!.id = dbCache.Id;
                 return new FindQueryResponse
                 {
                     Result = cachedData
@@ -62,7 +60,7 @@ namespace GithubSearcherTest.Application.Search.Handlers
 
             await _dbContext.SaveChangesAsync(ct);
 
-            data.id = searchResult.Id;
+            data!.id = searchResult.Id;
 
             return new FindQueryResponse
             {

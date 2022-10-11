@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using GithubSearcherTest.Infrastructure.Persistence.Seeds.Interfaces;
 using Microsoft.Extensions.Logging;
 

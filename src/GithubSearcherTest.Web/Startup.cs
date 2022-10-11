@@ -13,7 +13,7 @@ public static class Startup
             builder.Configuration,
             builder.Environment);
             
-        builder.Services.AddWebServices();
+        builder.Services.AddWebServices(builder.Configuration);
 
         return builder;
     }

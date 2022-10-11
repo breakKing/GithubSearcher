@@ -22,12 +22,12 @@ public class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 
     public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
-        var command = new AuthCommand(req.Username, req.Password);
+        var command = new AuthCommand(req.Username!, req.Password!);
         var commandResponse = await _mediator.Send(command, ct);
         
         if (commandResponse.Succeeded)
         {
-            var user = commandResponse.User;
+            var user = commandResponse.User!;
 
             var jwtToken = JWTBearer.CreateToken(
                 signingKey: "SuperSecretTokenSigningKey",

@@ -44,7 +44,7 @@ public class HistoryQueryHandler : IRequestHandler<HistoryQuery, HistoryQueryRes
             Results = results.ConvertAll(r => 
             {
                 var data = JsonConvert.DeserializeObject<SearchResultDto>(r.Result);
-                data.id = r.Id;
+                data!.id = r.Id;
 
                 return data;
             })

@@ -21,7 +21,7 @@ public class IdentityService : IIdentityService
         _signInManager = signInManager;
     }
 
-    public async Task<UserDto> AuthAsync(
+    public async Task<UserDto?> AuthAsync(
         string username,
         string password,
         CancellationToken ct = default)
@@ -55,7 +55,7 @@ public class IdentityService : IIdentityService
         string password,
         CancellationToken ct = default)
     {
-        if (await _userManager.Users.AnyAsync(u => u.UserName == username))
+        if (await _userManager.Users.AnyAsync(u => u.UserName == username, ct))
         {
             return Error.Failure("IdentityService.UserAlreadyExists",
                 "User with such a username already exists");

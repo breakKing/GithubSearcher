@@ -5,5 +5,5 @@ namespace GithubSearcherTest.Application.Identity.Responses;
 public class AuthCommandResponse
 {
     public bool Succeeded { get; set; }
-    public UserDto User { get; set; }
+    public UserDto? User { get; set; }
 }
